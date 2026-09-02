@@ -128,8 +128,12 @@ app.get("/notices/:id", (req, res) => {
   res.json(notice);
 });
 
-app.listen(PORT, () => {
-  console.log(`CampusConnect server running on port ${PORT}`);
-});
+// Start the server only when this file is run directly.
+// This allows automated tests to import the Express app safely.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`CampusConnect server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;

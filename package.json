@@ -1,16 +1,26 @@
 {
   "name": "campusconnect",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CampusConnect Digital Notice Board Management System",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js",
+    "test": "node --test",
+    "build": "powershell -ExecutionPolicy Bypass -File .\\build.ps1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "campus",
+    "notice-board",
+    "rest-api",
+    "devops"
+  ],
+  "author": "Preetha",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.4"
   }
 }
