@@ -30,7 +30,8 @@ let nextId = 3;
 // Home endpoint
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to CampusConnect Digital Notice Board"
+    message: "Welcome to CampusConnect Digital Notice Board",
+    version: "1.0.0"
   });
 });
 
