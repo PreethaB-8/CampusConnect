@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CampusConnect | Digital Notice Board</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: #172554;
+      color: white;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: white;
+      color: #172554;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+    }
+
+    .brand h1 {
+      font-size: 25px;
+      letter-spacing: 0.3px;
+    }
+
+    .brand p {
+      margin-top: 3px;
+      color: #bfdbfe;
+      font-size: 13px;
+    }
+
+    .status {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 9px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .hero {
+      width: 86%;
+      max-width: 1200px;
+      margin: 35px auto 25px;
+      background: white;
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: 0 5px 25px rgba(15, 23, 42, 0.08);
+      border-left: 7px solid #f59e0b;
+    }
+
+    .hero-label {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 13px;
+    }
+
+    .hero h2 {
+      font-size: 30px;
+      color: #172554;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: #64748b;
+      line-height: 1.6;
+      max-width: 750px;
+    }
+
+    .notice-board {
+      width: 86%;
+      max-width: 1200px;
+      margin: 0 auto 45px;
+    }
+
+    .board-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .board-heading h2 {
+      color: #172554;
+      font-size: 22px;
+    }
+
+    .board-heading span {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .notices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .notice-card {
+      background: white;
+      border-radius: 15px;
+      padding: 23px;
+      box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07);
+      border-top: 5px solid #2563eb;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .notice-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+    }
+
+    .notice-card.urgent {
+      border-top-color: #dc2626;
+    }
+
+    .notice-card.high {
+      border-top-color: #f59e0b;
+    }
+
+    .notice-card.normal {
+      border-top-color: #16a34a;
+    }
+
+    .notice-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      gap: 10px;
+    }
+
+    .category {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .priority {
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .priority.urgent {
+      color: #dc2626;
+    }
+
+    .priority.high {
+      color: #d97706;
+    }
+
+    .priority.normal {
+      color: #16a34a;
+    }
+
+    .notice-card h3 {
+      color: #172554;
+      font-size: 19px;
+      margin-bottom: 9px;
+    }
+
+    .notice-card p {
+      color: #64748b;
+      line-height: 1.6;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .date {
+      color: #94a3b8;
+      font-size: 11px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 12px;
+    }
+
+    .empty {
+      background: white;
+      border-radius: 15px;
+      padding: 35px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    footer {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 12px;
+      padding: 25px;
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        padding: 18px 5%;
+      }
+
+      .status {
+        display: none;
+      }
+
+      .hero,
+      .notice-board {
+        width: 92%;
+      }
+
+      .hero {
+        padding: 25px;
+      }
+
+      .hero h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🏫</div>
+
+      <div>
+        <h1>CampusConnect</h1>
+        <p>Digital Campus Notice Board</p>
+      </div>
+    </div>
+
+    <div class="status">
+      ● Campus Updates
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-label">📢 CAMPUS NOTICE BOARD</div>
+
+      <h2>Stay informed. Stay connected.</h2>
+
+      <p>
+        Important academic announcements, examinations,
+        events and campus updates — all in one place.
+      </p>
+    </section>
+
+    <section class="notice-board">
+
+      <div class="board-heading">
+        <h2>Latest Notices</h2>
+        <span id="noticeCount">Loading notices...</span>
+      </div>
+
+      <div id="notices" class="notices">
+        <div class="empty">
+          Loading campus notices...
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    CampusConnect Digital Notice Board Management System
+  </footer>
+
+  <script>
+    async function loadNotices() {
+      const container = document.getElementById("notices");
+      const count = document.getElementById("noticeCount");
+
+      try {
+        const response = await fetch("/notices");
+
+        if (!response.ok) {
+          throw new Error("Unable to load notices");
+        }
+
+        const notices = await response.json();
+
+        count.textContent =
+          `${notices.length} notice${notices.length === 1 ? "" : "s"}`;
+
+        if (notices.length === 0) {
+          container.innerHTML = `
+            <div class="empty">
+              No campus notices are available right now.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = notices.map(notice => {
+          const priorityClass =
+            String(notice.priority || "Normal").toLowerCase();
+
+          const date = notice.date
+            ? new Date(notice.date).toLocaleDateString()
+            : "Recently posted";
+
+          return `
+            <article class="notice-card ${priorityClass}">
+              <div class="notice-meta">
+                <span class="category">
+                  ${notice.category}
+                </span>
+
+                <span class="priority ${priorityClass}">
+                  ${notice.priority}
+                </span>
+              </div>
+
+              <h3>${notice.title}</h3>
+
+              <p>${notice.description}</p>
+
+              <div class="date">
+                📅 Posted: ${date}
+              </div>
+            </article>
+          `;
+        }).join("");
+
+      } catch (error) {
+        count.textContent = "Unavailable";
+
+        container.innerHTML = `
+          <div class="empty">
+            Unable to load campus notices.
+            Please try again.
+          </div>
+        `;
+      }
+    }
+
+    loadNotices();
+  </script>
+
+</body>
+</html>

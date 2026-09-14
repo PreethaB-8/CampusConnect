@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,8 +29,18 @@ const notices = [
 let nextId = 3;
 
 // Home endpoint
+// API/test requests receive the original JSON response.
+// Browser requests receive the CampusConnect UI.
 app.get("/", (req, res) => {
-  res.json({
+  const acceptHeader = req.headers.accept || "";
+
+  if (acceptHeader.includes("text/html")) {
+    return res.sendFile(
+      path.join(__dirname, "..", "public", "index.html")
+    );
+  }
+
+  return res.json({
     message: "Welcome to CampusConnect Digital Notice Board",
     version: "1.0.0"
   });
@@ -100,13 +111,15 @@ app.get("/notices", (req, res) => {
 
   if (category) {
     filteredNotices = filteredNotices.filter(
-      notice => notice.category.toLowerCase() === category.toLowerCase()
+      notice =>
+        notice.category.toLowerCase() === category.toLowerCase()
     );
   }
 
   if (priority) {
     filteredNotices = filteredNotices.filter(
-      notice => notice.priority.toLowerCase() === priority.toLowerCase()
+      notice =>
+        notice.priority.toLowerCase() === priority.toLowerCase()
     );
   }
 
@@ -127,6 +140,9 @@ app.get("/notices/:id", (req, res) => {
 
   res.json(notice);
 });
+
+// Serve frontend static files AFTER API routes.
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Start the server only when this file is run directly.
 // This allows automated tests to import the Express app safely.
