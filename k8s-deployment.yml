@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campusconnect
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: campusconnect
+  template:
+    metadata:
+      labels:
+        app: campusconnect
+    spec:
+      containers:
+        - name: campusconnect
+          image: campusconnect:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
