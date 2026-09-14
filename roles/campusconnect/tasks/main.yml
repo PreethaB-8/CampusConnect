@@ -1,0 +1,30 @@
+---
+- name: Check Node.js runtime
+  ansible.builtin.command:
+    cmd: node --version
+  register: node_version
+  changed_when: false
+
+- name: Display Node.js version
+  ansible.builtin.debug:
+    msg: "Node.js runtime available: {{ node_version.stdout }}"
+
+- name: Install application dependencies
+  ansible.builtin.command:
+    cmd: npm ci --omit=dev
+    chdir: "{{ playbook_dir }}"
+  changed_when: true
+
+- name: Create application configuration file
+  ansible.builtin.copy:
+    dest: "{{ playbook_dir }}/.ansible-app-port"
+    content: "{{ app_port }}\n"
+    mode: "0644"
+  notify: Restart CampusConnect
+
+- name: Start CampusConnect application
+  ansible.builtin.shell:
+    cmd: "nohup npm start > /tmp/campusconnect-ansible.log 2>&1 &"
+    chdir: "{{ playbook_dir }}"
+  async: 1
+  poll: 0

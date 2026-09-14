@@ -1,0 +1,5 @@
+---
+- name: Restart CampusConnect
+  ansible.builtin.command:
+    cmd: pkill -f "node src/app.js"
+  failed_when: false
